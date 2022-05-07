@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -49,12 +51,10 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
 
-    // Koin Core features
-    implementation "io.insert-koin:koin-core:3.1.0"
-// Koin Test features
-    testImplementation "io.insert-koin:koin-test:3.1.0"
-    // Koin main features for Android
-    implementation "io.insert-koin:koin-android:3.1.0"
+    implementation 'com.google.dagger:hilt-android:2.41'
+    kapt 'com.google.dagger:hilt-compiler:2.41'
+    implementation 'androidx.fragment:fragment-ktx:1.4.1'
+
 
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
