@@ -1,18 +1,32 @@
 package com.agening.cleanarch.di
 
+import android.content.Context
+import android.content.SharedPreferences
 import com.agening.cleanarch.data.repository.UserRepositoryImpl
 import com.agening.cleanarch.data.storage.UserStorage
 import com.agening.cleanarch.data.storage.sharedrefs.SharedPrefUserStorage
 import com.agening.cleanarch.domain.repository.UserRepository
-import org.koin.dsl.module
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
-val dataModule = module {
+@Module
+@InstallIn(SingletonComponent::class)
+class DataModule {
 
-    single<UserStorage> {
-        SharedPrefUserStorage(context = get())
+    @Provides
+    @Singleton
+    fun provideUserStorage(@ApplicationContext context:Context):UserStorage{
+        return SharedPrefUserStorage(context = context)
     }
 
-    single<UserRepository> {
-        UserRepositoryImpl(userStorage = get())
+    @Provides
+    @Singleton
+    fun provideUserRepository(userStorage: UserStorage):UserRepository{
+        return UserRepositoryImpl(userStorage = userStorage)
     }
+
 }
