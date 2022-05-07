@@ -7,24 +7,22 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.agening.cleanarch.databinding.ActivityMainBinding
 import com.agening.cleanarch.domain.models.UserName
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var vm: MainViewModel
+    private val vm: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater).also {
             setContentView(it.root)
         }
-
-        vm = ViewModelProvider(this, MainViewModelFactory(this))[MainViewModel::class.java]
-
-        vm.resultLive.observe(this, Observer{
+        vm.resultLive.observe(this) {
             binding.dataTextView.text = it
-        })
+        }
 
         Log.e("AAA", "Activity created")
 
